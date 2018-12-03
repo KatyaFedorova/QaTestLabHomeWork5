@@ -1,9 +1,11 @@
 package myprojects.automation.assignment5.tests;
 
 import myprojects.automation.assignment5.BaseTest;
+import myprojects.automation.assignment5.model.Product;
+import myprojects.automation.assignment5.model.User;
 import myprojects.automation.assignment5.utils.Properties;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-
 
 public class PlaceOrderTest extends BaseTest {
 
@@ -14,21 +16,27 @@ public class PlaceOrderTest extends BaseTest {
 
     }
 
-    @Test
-    public void createNewOrder() {
-        // TODO implement order creation test
+    @Test(dataProvider = "User")
+    public void createNewOrder(User user) {
+        driver.navigate().to(Properties.getBaseUrl());
+        actions.openRandomProduct();
+        Product product = actions.getOpenedProductInfo();
 
-        // open random product
+        actions.click(By.cssSelector(".add-to-cart"));
+        actions.verifyBasket(product);
 
-        // save product parameters
+        actions.click(By.cssSelector(".cart-summary .btn"));
+        actions.setOrderData(user);
 
-        // add product to Cart and validate product information in the Cart
+        actions.verifyOrderConfirmation(product);
 
-        // proceed to order creation, fill required information
+        actions.verifyLeftQuntity(product);
 
-        // place new order and validate order summary
 
-        // check updated In Stock value
+
+
+
+
     }
 
 }

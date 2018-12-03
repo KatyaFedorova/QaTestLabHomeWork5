@@ -1,0 +1,10 @@
+{
+  "firstName": "Тест",
+  "lastName": "Тестов",
+  "email": "test@test.ua",
+  "postCode": "62122",
+  "city": "Харьков",
+  "street": "Молодежная",
+  "house": "10",
+  "apartment": "13"
+}

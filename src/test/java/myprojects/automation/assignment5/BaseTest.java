@@ -1,13 +1,14 @@
 package myprojects.automation.assignment5;
 
+import com.google.gson.Gson;
+import myprojects.automation.assignment5.model.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -69,5 +70,27 @@ public abstract class BaseTest {
             default:
                 return false;
         }
+    }
+
+    @DataProvider(name = "loginData")
+    protected Object[][] loginData () {
+        return new Object[][]{{"webinar.test@gmail.com","Xcg7299bnSmMuRLp9ITw"}};
+    }
+
+    @DataProvider(name = "User")
+    protected Object[] getUserData () {
+        return new Object[][] {{getDataFromFile("user.json")}};
+    }
+
+    private static User getDataFromFile(String accountFileName) {
+        Gson gson = new Gson();
+        User user;
+        try (FileReader reader = new FileReader("data/" + accountFileName)) {
+            user = gson.fromJson(reader, User.class);
+        } catch (Exception e) {
+            System.err.println("ОШИБКА! " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 }
